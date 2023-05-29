@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // curl --location 'http://ec2-52-66-133-179.ap-south-1.compute.amazonaws.com:8080/chat' \
 // --header 'Content-Type: application/json' \
@@ -6,8 +6,9 @@ import React from 'react';
 
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
-    const handleAPI = (message) => {
-        const botMessage = createChatBotMessage(getChatResponse(message));
+    // const [message, setMessage] = useState 
+    const handleAPI = async(message) => {
+        const botMessage = createChatBotMessage(await getChatResponse(message));
 
         setState((prev) => ({
             ...prev,
@@ -15,6 +16,11 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
     };
     console.log(children);
+
+    useEffect(()=>{
+
+    },[])
+
     const getChatResponse = async (message) => {
         const getResponse = await fetch('http://ec2-52-66-133-179.ap-south-1.compute.amazonaws.com:8080/chat',{
             method:'POST',
